@@ -20,4 +20,4 @@ export const ADDRESS = "San Pedro Garza Garcia,Nuevo Leon, México";
 
 /** WhatsApp link helper */
 export const whatsappLink = (message = "Hola, me interesa cotizar un viaje con GB Travel") =>
-  `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  `https://wa.me/${528182105791}?text=${encodeURIComponent(message)}`;
