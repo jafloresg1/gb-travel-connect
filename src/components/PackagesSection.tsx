@@ -17,37 +17,37 @@ const packages = [
     image: cancun,
     title: "Cancún Todo Incluido",
     desc: "Playas de ensueño, resorts de lujo y actividades para toda la familia.",
-    price: "Desde $X,XXX MXN",
+    price: "Desde $9,999 MXN",
   },
   {
     image: rivieraMaya,
     title: "Riviera Maya",
     desc: "Descubre cenotes, ruinas mayas y la mejor gastronomía del Caribe.",
-    price: "Desde $X,XXX MXN",
+    price: "Desde $11,999 MXN",
   },
   {
     image: europa,
     title: "Europa en Vacaciones",
     desc: "Recorre las ciudades más icónicas de Europa con un paquete a tu medida.",
-    price: "Desde $XX,XXX MXN",
+    price: "Desde $49,999 MXN",
   },
   {
     image: familiar,
     title: "Paquetes Familiares",
     desc: "Diversión asegurada para chicos y grandes con hospedaje y actividades incluidas.",
-    price: "Desde $X,XXX MXN",
+    price: "Desde $19,999 MXN",
   },
   {
     image: salidasEspeciales,
     title: "Salidas Especiales",
     desc: "Cruceros y experiencias únicas con fechas exclusivas todo el año.",
-    price: "Desde $XX,XXX MXN",
+    price: "Desde $14,999 MXN",
   },
   {
     image: escapada,
     title: "Escapadas de Fin de Semana",
     desc: "Relájate y desconéctate con una escapada corta a destinos cercanos.",
-    price: "Desde $X,XXX MXN",
+    price: "Desde $4,999 MXN",
   },
 ];
 
