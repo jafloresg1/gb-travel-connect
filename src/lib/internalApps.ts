@@ -4,8 +4,8 @@
 // ============================================================
 
 export const INTERNAL_APP_URLS = {
-  cotizador: "URL_COTIZADOR",
-  gestorFinanciero: "URL_GESTOR_FINANCIERO",
-  tareasDiarias: "URL_TAREAS_DIARIAS",
+  cotizador: "https://cotizador.gbtravel.mx",
+  gestorFinanciero: "https://travel-folio-finance.lovable.app",
+  tareasDiarias: "https://travel-taskflow.lovable.app",
   gestorLeads: "", // Próximamente
 };
