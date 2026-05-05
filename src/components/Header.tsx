@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Menu, X, MessageCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Menu, X, MessageCircle, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { whatsappLink } from "@/lib/constants";
 import logo from "@/assets/logo_gbtravel.png";
