@@ -97,9 +97,7 @@ const InternalPortal = () => {
                   </Button>
                 ) : (
                   <Button asChild className="w-full">
-                    <a href={url} target="_blank" rel="noopener noreferrer">
-                      {cta}
-                    </a>
+                    <a href={url}>{cta}</a>
                   </Button>
                 )}
               </CardContent>
