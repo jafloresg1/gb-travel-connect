@@ -23,7 +23,7 @@ import { initialQuote, QuoteState, recommend, Recommendation } from "@/lib/recom
 import {
   HERO, SERVICIOS, DESTINOS, ORIGENES, TIPO_FECHAS, MESES, QUINCENAS, FLEXIBILIDAD,
   ESTILOS, MONEDAS, NIVELES_PRESUPUESTO, URGENCIAS, FEEDBACK_OPCIONES, AJUSTES,
-  PREFERENCIA_CONTACTO, TEXTOS, OptionCard,
+  PREFERENCIA_CONTACTO, TEXTOS, OptionCard, DURACIONES,
 } from "@/lib/armaViaje";
 import logo from "@/assets/logo_gbtravel.png";
 
@@ -40,7 +40,7 @@ const renderIcon = (name?: string) => {
   return Icon ? <Icon className="h-5 w-5" /> : null;
 };
 
-const TOTAL_STEPS = 8;
+const TOTAL_STEPS = 9;
 
 const labelFromId = (list: OptionCard[], id: string | null) =>
   list.find((o) => o.id === id)?.label ?? id ?? "";
