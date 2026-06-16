@@ -127,7 +127,9 @@ async function pushToGestor(payload: ReturnType<typeof buildGestorPayload>) {
       console.error("Gestor ingest error:", res.status, text);
       return { synced: false, reason: "ingest_error" as const };
     }
-    return { synced: true as const };
+    const result = await res.json().catch(() => ({}));
+    console.log("Gestor ingest ok:", result);
+    return { synced: true as const, id: result?.id ?? null, folio: result?.folio ?? null };
   } catch (e) {
     console.error("Gestor ingest fetch failed:", e);
     return { synced: false, reason: "network_error" as const };
