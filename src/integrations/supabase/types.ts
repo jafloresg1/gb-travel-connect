@@ -14,7 +14,120 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      leads: {
+        Row: {
+          adultos: number
+          ajustes: string[] | null
+          bebes: number
+          comentario_cambio: string | null
+          correo: string | null
+          created_at: string
+          destino: string | null
+          edades_menores: number[] | null
+          estado: string
+          estilos: string[] | null
+          fecha_regreso: string | null
+          fecha_salida: string | null
+          flexibilidad: string[] | null
+          fuente: string
+          id: string
+          menores: number
+          mes_aprox: string | null
+          moneda: string | null
+          nivel_presupuesto: string | null
+          nivel_sugerido: string | null
+          nombre: string | null
+          origen: string | null
+          otro_destino: string | null
+          otro_origen: string | null
+          preferencia_contacto: string | null
+          prioridad: string | null
+          quincena: string | null
+          respuesta_cliente: string | null
+          resultado_descripcion: string | null
+          resultado_incluye: string[] | null
+          resultado_titulo: string | null
+          servicio: string | null
+          tipo_fechas: string | null
+          urgencia: string | null
+          whatsapp: string | null
+        }
+        Insert: {
+          adultos?: number
+          ajustes?: string[] | null
+          bebes?: number
+          comentario_cambio?: string | null
+          correo?: string | null
+          created_at?: string
+          destino?: string | null
+          edades_menores?: number[] | null
+          estado?: string
+          estilos?: string[] | null
+          fecha_regreso?: string | null
+          fecha_salida?: string | null
+          flexibilidad?: string[] | null
+          fuente?: string
+          id?: string
+          menores?: number
+          mes_aprox?: string | null
+          moneda?: string | null
+          nivel_presupuesto?: string | null
+          nivel_sugerido?: string | null
+          nombre?: string | null
+          origen?: string | null
+          otro_destino?: string | null
+          otro_origen?: string | null
+          preferencia_contacto?: string | null
+          prioridad?: string | null
+          quincena?: string | null
+          respuesta_cliente?: string | null
+          resultado_descripcion?: string | null
+          resultado_incluye?: string[] | null
+          resultado_titulo?: string | null
+          servicio?: string | null
+          tipo_fechas?: string | null
+          urgencia?: string | null
+          whatsapp?: string | null
+        }
+        Update: {
+          adultos?: number
+          ajustes?: string[] | null
+          bebes?: number
+          comentario_cambio?: string | null
+          correo?: string | null
+          created_at?: string
+          destino?: string | null
+          edades_menores?: number[] | null
+          estado?: string
+          estilos?: string[] | null
+          fecha_regreso?: string | null
+          fecha_salida?: string | null
+          flexibilidad?: string[] | null
+          fuente?: string
+          id?: string
+          menores?: number
+          mes_aprox?: string | null
+          moneda?: string | null
+          nivel_presupuesto?: string | null
+          nivel_sugerido?: string | null
+          nombre?: string | null
+          origen?: string | null
+          otro_destino?: string | null
+          otro_origen?: string | null
+          preferencia_contacto?: string | null
+          prioridad?: string | null
+          quincena?: string | null
+          respuesta_cliente?: string | null
+          resultado_descripcion?: string | null
+          resultado_incluye?: string[] | null
+          resultado_titulo?: string | null
+          servicio?: string | null
+          tipo_fechas?: string | null
+          urgencia?: string | null
+          whatsapp?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
