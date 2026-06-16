@@ -504,13 +504,13 @@ const ArmaTuViaje = () => {
   }
 
   // ---------- FEEDBACK ----------
-  if (phase === 10) {
+  if (phase === 11) {
     const canContinue =
       !!q.respuestaCliente &&
       (q.respuestaCliente !== "ajustar" || q.ajustes.length > 0);
     return (
       <StepShell
-        step={8}
+        step={9}
         total={TOTAL_STEPS}
         title="¿Este resultado se parece a lo que estás buscando?"
         onBack={goBack}
@@ -555,11 +555,11 @@ const ArmaTuViaje = () => {
   }
 
   // ---------- CONTACTO ----------
-  if (phase === 11) {
+  if (phase === 12) {
     const hasContact = q.whatsapp.trim().length > 0 || q.correo.trim().length > 0;
     return (
       <StepShell
-        step={8}
+        step={9}
         total={TOTAL_STEPS}
         title="¿A dónde te enviamos opciones reales para este viaje?"
         onBack={goBack}
@@ -618,7 +618,7 @@ const ArmaTuViaje = () => {
   }
 
   // ---------- RESUMEN ----------
-  if (phase === 12) {
+  if (phase === 13) {
     const destinoLabel = q.destino === "otro" ? q.otroDestino : labelFromId(DESTINOS, q.destino);
     const origenLabel = q.origen === "otro" ? q.otroOrigen : labelFromId(ORIGENES, q.origen);
     const fechasLabel =
@@ -630,11 +630,14 @@ const ArmaTuViaje = () => {
             ? q.flexibilidad.join(", ")
             : "Quiere recomendación de fecha";
 
+    const duracionLabel = q.duracion === "otra" ? q.duracionOtra : labelFromId(DURACIONES, q.duracion);
+
     const rows: [string, string][] = [
       ["Servicio", q.servicios.map((s) => labelFromId(SERVICIOS, s)).join(", ")],
       ["Destino", destinoLabel || "—"],
       ["Ciudad de salida", origenLabel || "—"],
       ["Fechas", fechasLabel || "—"],
+      ["Duración", duracionLabel || "—"],
       ["Adultos", String(q.adultos)],
       ["Menores", q.menores ? `${q.menores} (edades: ${q.edadesMenores.join(", ")})` : "0"],
       ["Bebés", String(q.bebes)],
@@ -650,7 +653,7 @@ const ArmaTuViaje = () => {
 
     return (
       <StepShell
-        step={8}
+        step={9}
         total={TOTAL_STEPS}
         title="Revisa tu solicitud"
         onBack={goBack}
