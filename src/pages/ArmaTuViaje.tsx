@@ -706,6 +706,8 @@ const ArmaTuViaje = () => {
     ...(q.comentarioCambio ? [q.comentarioCambio] : []),
   ].filter(Boolean).join(" · ") || "Ninguno";
 
+  const duracionLabel = q.duracion === "otra" ? q.duracionOtra : labelFromId(DURACIONES, q.duracion);
+
   const whatsappMessage = [
     'Hola, acabo de llenar "Arma tu viaje ideal" en GB Travel y quiero dar seguimiento a mi cotización.',
     "",
@@ -714,6 +716,7 @@ const ArmaTuViaje = () => {
     `Destino: ${destinoLabel || "—"}`,
     `Origen: ${origenLabel || "—"}`,
     `Fechas: ${fechasLabel || "—"}`,
+    `Duración: ${duracionLabel || "—"}`,
     `Pasajeros: ${pasajerosLabel || "—"}`,
     `Estilo de viaje: ${q.estilos.join(", ") || "—"}`,
     `Presupuesto: ${presupuestoLabel || "—"}`,
