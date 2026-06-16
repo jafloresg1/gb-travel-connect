@@ -289,8 +289,43 @@ const ArmaTuViaje = () => {
     );
   }
 
-  // ---------- STEP 5: Pasajeros ----------
+  // ---------- STEP 5: Duración ----------
   if (phase === 5) {
+    return (
+      <StepShell
+        step={5}
+        total={TOTAL_STEPS}
+        title="¿Por cuántas noches quieres viajar?"
+        subtitle="Elige una opción o escribe la tuya."
+        onBack={goBack}
+        onNext={goNext}
+        nextDisabled={!q.duracion || (q.duracion === "otra" && !q.duracionOtra.trim())}
+      >
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {DURACIONES.map((d) => (
+            <SelectableCard
+              key={d.id}
+              label={d.label}
+              icon={renderIcon(d.icon)}
+              selected={q.duracion === d.id}
+              onClick={() => set({ duracion: d.id })}
+            />
+          ))}
+        </div>
+        {q.duracion === "otra" && (
+          <Input
+            className="mt-4"
+            placeholder="Ej. 10 días / 9 noches"
+            value={q.duracionOtra}
+            onChange={(e) => set({ duracionOtra: e.target.value })}
+          />
+        )}
+      </StepShell>
+    );
+  }
+
+  // ---------- STEP 6: Pasajeros ----------
+  if (phase === 6) {
     const setEdad = (i: number, val: number) => {
       const next = [...q.edadesMenores];
       next[i] = val;
@@ -303,7 +338,7 @@ const ArmaTuViaje = () => {
       set({ menores, edadesMenores: next });
     };
     return (
-      <StepShell step={5} total={TOTAL_STEPS} title="¿Cuántas personas viajan?" onBack={goBack} onNext={goNext}>
+      <StepShell step={6} total={TOTAL_STEPS} title="¿Cuántas personas viajan?" onBack={goBack} onNext={goNext}>
         <div className="space-y-3">
           <Counter label="Adultos" value={q.adultos} min={1} onChange={(v) => set({ adultos: v })} />
           <Counter label="Menores" hint="2 a 17 años" value={q.menores} min={0} onChange={syncEdades} />
@@ -336,8 +371,8 @@ const ArmaTuViaje = () => {
     );
   }
 
-  // ---------- STEP 6: Estilos ----------
-  if (phase === 6) {
+  // ---------- STEP 7: Estilos ----------
+  if (phase === 7) {
     return (
       <StepShell
         step={6}
