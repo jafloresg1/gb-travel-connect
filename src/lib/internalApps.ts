@@ -7,5 +7,5 @@ export const INTERNAL_APP_URLS = {
   cotizador: "https://cotizador.gbtravel.mx",
   gestorFinanciero: "https://travel-folio-finance.lovable.app",
   tareasDiarias: "https://travel-taskflow.lovable.app",
-  gestorLeads: "", // Próximamente
+  gestorLeads: "https://leads.gbtravel.co/",
 };
