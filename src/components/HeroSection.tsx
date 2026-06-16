@@ -1,4 +1,5 @@
-import { MessageCircle, ChevronDown } from "lucide-react";
+import { MessageCircle, ChevronDown, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { whatsappLink } from "@/lib/constants";
 import heroBg from "@/assets/hero-bg.jpg";
