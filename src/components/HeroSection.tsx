@@ -30,8 +30,11 @@ const HeroSection = () => (
         promociones exclusivas para que tu próximo viaje sea inolvidable.
       </p>
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
-        <Button asChild size="lg" className="text-base gap-2">
-          <a href="#paquetes">Ver paquetes</a>
+        <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground text-base gap-2">
+          <Link to="/arma-tu-viaje">
+            <Sparkles className="h-5 w-5" />
+            Arma tu viaje ideal
+          </Link>
         </Button>
         <Button
           asChild
@@ -42,6 +45,11 @@ const HeroSection = () => (
             <MessageCircle className="h-5 w-5" />
             Cotizar ahora
           </a>
+        </Button>
+      </div>
+      <div className="relative z-10 mt-4">
+        <Button asChild variant="link" className="text-primary-foreground/80 hover:text-primary-foreground">
+          <a href="#paquetes">Ver paquetes</a>
         </Button>
       </div>
     </div>
