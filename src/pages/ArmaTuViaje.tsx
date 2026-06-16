@@ -375,7 +375,7 @@ const ArmaTuViaje = () => {
   if (phase === 7) {
     return (
       <StepShell
-        step={6}
+        step={7}
         total={TOTAL_STEPS}
         title="¿Qué estilo de viaje buscas?"
         subtitle="Puedes elegir varias opciones."
@@ -392,11 +392,11 @@ const ArmaTuViaje = () => {
     );
   }
 
-  // ---------- STEP 7: Presupuesto ----------
-  if (phase === 7) {
+  // ---------- STEP 8: Presupuesto ----------
+  if (phase === 8) {
     return (
       <StepShell
-        step={7}
+        step={8}
         total={TOTAL_STEPS}
         title="¿Qué nivel de presupuesto tienes en mente?"
         onBack={goBack}
@@ -425,11 +425,11 @@ const ArmaTuViaje = () => {
     );
   }
 
-  // ---------- STEP 8: Urgencia ----------
-  if (phase === 8) {
+  // ---------- STEP 9: Urgencia ----------
+  if (phase === 9) {
     return (
       <StepShell
-        step={8}
+        step={9}
         total={TOTAL_STEPS}
         title="¿Qué tan pronto quieres reservar?"
         onBack={goBack}
@@ -453,7 +453,7 @@ const ArmaTuViaje = () => {
   }
 
   // ---------- RESULTADO ----------
-  if (phase === 9) {
+  if (phase === 10) {
     return (
       <div className="min-h-[100dvh] bg-gradient-to-b from-secondary via-background to-background flex flex-col">
         <div className="flex-1 container mx-auto max-w-2xl px-4 py-8 animate-fade-in">
