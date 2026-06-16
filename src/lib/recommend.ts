@@ -54,6 +54,8 @@ export const initialQuote: QuoteState = {
   moneda: null,
   nivelPresupuesto: null,
   urgencia: null,
+  duracion: null,
+  duracionOtra: "",
   respuestaCliente: null,
   ajustes: [],
   comentarioCambio: "",
