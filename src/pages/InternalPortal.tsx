@@ -33,9 +33,8 @@ const apps = [
     title: "Gestor de Leads",
     description:
       "Seguimiento de prospectos, WhatsApp, redes sociales y oportunidades comerciales.",
-    cta: "Próximamente",
+    cta: "Entrar al Gestor de Leads",
     url: INTERNAL_APP_URLS.gestorLeads,
-    soon: true,
   },
 ];
 
