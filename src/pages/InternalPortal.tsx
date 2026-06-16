@@ -33,9 +33,8 @@ const apps = [
     title: "Gestor de Leads",
     description:
       "Seguimiento de prospectos, WhatsApp, redes sociales y oportunidades comerciales.",
-    cta: "Próximamente",
+    cta: "Entrar al Gestor de Leads",
     url: INTERNAL_APP_URLS.gestorLeads,
-    soon: true,
   },
 ];
 
@@ -68,20 +67,14 @@ const InternalPortal = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 max-w-5xl mx-auto">
-          {apps.map(({ icon: Icon, title, description, cta, url, soon }) => (
+          {apps.map(({ icon: Icon, title, description, cta, url }) => (
             <Card
               key={title}
-              className={`flex flex-col transition-all hover:shadow-lg ${
-                soon ? "opacity-75" : "hover:-translate-y-0.5"
-              }`}
+              className="flex flex-col transition-all hover:shadow-lg hover:-translate-y-0.5"
             >
               <CardHeader>
                 <div className="flex items-center gap-3">
-                  <div
-                    className={`h-12 w-12 rounded-lg flex items-center justify-center ${
-                      soon ? "bg-muted text-muted-foreground" : "bg-primary/10 text-primary"
-                    }`}
-                  >
+                  <div className="h-12 w-12 rounded-lg flex items-center justify-center bg-primary/10 text-primary">
                     <Icon className="h-6 w-6" />
                   </div>
                   <CardTitle className="text-xl md:text-2xl">{title}</CardTitle>
@@ -91,15 +84,9 @@ const InternalPortal = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent className="mt-auto">
-                {soon ? (
-                  <Button disabled className="w-full" variant="secondary">
-                    {cta}
-                  </Button>
-                ) : (
-                  <Button asChild className="w-full">
-                    <a href={url}>{cta}</a>
-                  </Button>
-                )}
+                <Button asChild className="w-full">
+                  <a href={url}>{cta}</a>
+                </Button>
               </CardContent>
             </Card>
           ))}

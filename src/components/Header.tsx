@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, MessageCircle, Lock } from "lucide-react";
+import { Menu, X, MessageCircle, Lock, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { whatsappLink } from "@/lib/constants";
 import logo from "@/assets/logo_gbtravel.png";
@@ -35,6 +35,13 @@ const Header = () => {
             </a>
           ))}
           <Link
+            to="/arma-tu-viaje"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent/80 transition-colors"
+          >
+            <Sparkles className="h-3.5 w-3.5" />
+            Arma tu viaje ideal
+          </Link>
+          <Link
             to="/app"
             className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground/60 hover:text-primary transition-colors"
           >
@@ -68,6 +75,14 @@ const Header = () => {
               {item.label}
             </a>
           ))}
+          <Link
+            to="/arma-tu-viaje"
+            onClick={() => setOpen(false)}
+            className="inline-flex items-center gap-1.5 text-sm font-medium py-2 text-accent hover:text-accent/80 transition-colors"
+          >
+            <Sparkles className="h-3.5 w-3.5" />
+            Arma tu viaje ideal
+          </Link>
           <Link
             to="/app"
             onClick={() => setOpen(false)}

@@ -19,6 +19,7 @@ export type Database = {
           adultos: number
           ajustes: string[] | null
           bebes: number
+          campana: string
           comentario_cambio: string | null
           correo: string | null
           created_at: string
@@ -33,6 +34,7 @@ export type Database = {
           id: string
           menores: number
           mes_aprox: string | null
+          metadata: Json
           moneda: string | null
           nivel_presupuesto: string | null
           nivel_sugerido: string | null
@@ -47,6 +49,7 @@ export type Database = {
           resultado_descripcion: string | null
           resultado_incluye: string[] | null
           resultado_titulo: string | null
+          resumen: string | null
           servicio: string | null
           tipo_fechas: string | null
           urgencia: string | null
@@ -56,6 +59,7 @@ export type Database = {
           adultos?: number
           ajustes?: string[] | null
           bebes?: number
+          campana?: string
           comentario_cambio?: string | null
           correo?: string | null
           created_at?: string
@@ -70,6 +74,7 @@ export type Database = {
           id?: string
           menores?: number
           mes_aprox?: string | null
+          metadata?: Json
           moneda?: string | null
           nivel_presupuesto?: string | null
           nivel_sugerido?: string | null
@@ -84,6 +89,7 @@ export type Database = {
           resultado_descripcion?: string | null
           resultado_incluye?: string[] | null
           resultado_titulo?: string | null
+          resumen?: string | null
           servicio?: string | null
           tipo_fechas?: string | null
           urgencia?: string | null
@@ -93,6 +99,7 @@ export type Database = {
           adultos?: number
           ajustes?: string[] | null
           bebes?: number
+          campana?: string
           comentario_cambio?: string | null
           correo?: string | null
           created_at?: string
@@ -107,6 +114,7 @@ export type Database = {
           id?: string
           menores?: number
           mes_aprox?: string | null
+          metadata?: Json
           moneda?: string | null
           nivel_presupuesto?: string | null
           nivel_sugerido?: string | null
@@ -121,6 +129,7 @@ export type Database = {
           resultado_descripcion?: string | null
           resultado_incluye?: string[] | null
           resultado_titulo?: string | null
+          resumen?: string | null
           servicio?: string | null
           tipo_fechas?: string | null
           urgencia?: string | null
