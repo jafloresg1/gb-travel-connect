@@ -795,6 +795,8 @@ const ArmaTuViaje = () => {
         moneda: q.moneda,
         nivel_presupuesto: labelFromId(NIVELES_PRESUPUESTO, q.nivelPresupuesto) || null,
         urgencia: labelFromId(URGENCIAS, q.urgencia) || null,
+        duracion: labelFromId(DURACIONES, q.duracion) || null,
+        duracion_otra: q.duracion === "otra" ? q.duracionOtra : null,
         resultado_titulo: recommendation.titulo,
         resultado_descripcion: recommendation.descripcion,
         resultado_incluye: recommendation.incluye,
