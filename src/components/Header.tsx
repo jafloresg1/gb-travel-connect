@@ -35,6 +35,13 @@ const Header = () => {
             </a>
           ))}
           <Link
+            to="/arma-tu-viaje"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent/80 transition-colors"
+          >
+            <Sparkles className="h-3.5 w-3.5" />
+            Arma tu viaje ideal
+          </Link>
+          <Link
             to="/app"
             className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground/60 hover:text-primary transition-colors"
           >
