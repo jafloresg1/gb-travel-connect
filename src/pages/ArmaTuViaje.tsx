@@ -644,6 +644,45 @@ const ArmaTuViaje = () => {
   }
 
   // ---------- CONFIRMACIÓN ----------
+  const destinoLabel = q.destino === "otro" ? q.otroDestino : labelFromId(DESTINOS, q.destino);
+  const origenLabel = q.origen === "otro" ? q.otroOrigen : labelFromId(ORIGENES, q.origen);
+  const fechasLabel =
+    q.tipoFechas === "tengo-fechas"
+      ? `${q.fechaSalida ? format(new Date(q.fechaSalida), "d MMM yyyy", { locale: es }) : "?"}${q.fechaRegreso ? " → " + format(new Date(q.fechaRegreso), "d MMM yyyy", { locale: es }) : ""}`
+      : q.tipoFechas === "aproximadas"
+        ? `${q.mes ?? ""}${q.quincena ? " · " + q.quincena : ""}`
+        : q.tipoFechas === "flexible"
+          ? q.flexibilidad.join(", ")
+          : "Quiere recomendación de fecha";
+
+  const pasajerosLabel = [
+    `${q.adultos} adulto${q.adultos > 1 ? "s" : ""}`,
+    q.menores > 0 ? `${q.menores} menor${q.menores > 1 ? "es" : ""} (${q.edadesMenores.join(", ")} años)` : null,
+    q.bebes > 0 ? `${q.bebes} bebé${q.bebes > 1 ? "s" : ""}` : null,
+  ].filter(Boolean).join(" · ");
+
+  const presupuestoLabel = `${labelFromId(NIVELES_PRESUPUESTO, q.nivelPresupuesto)}${q.moneda ? " (" + q.moneda + ")" : ""}`;
+
+  const ajustesLabel = [
+    ...(q.ajustes.length ? [q.ajustes.join(", ")] : []),
+    ...(q.comentarioCambio ? [q.comentarioCambio] : []),
+  ].filter(Boolean).join(" · ") || "Ninguno";
+
+  const whatsappMessage = [
+    'Hola, acabo de llenar "Arma tu viaje ideal" en GB Travel y quiero dar seguimiento a mi cotización.',
+    "",
+    "Resumen de mi viaje:",
+    `Servicio: ${q.servicios.map((s) => labelFromId(SERVICIOS, s)).join(", ") || "—"}`,
+    `Destino: ${destinoLabel || "—"}`,
+    `Origen: ${origenLabel || "—"}`,
+    `Fechas: ${fechasLabel || "—"}`,
+    `Pasajeros: ${pasajerosLabel || "—"}`,
+    `Estilo de viaje: ${q.estilos.join(", ") || "—"}`,
+    `Presupuesto: ${presupuestoLabel || "—"}`,
+    `Resultado sugerido: ${recommendation.titulo || "—"}`,
+    `Ajustes o comentarios: ${ajustesLabel}`,
+  ].join("\n");
+
   return (
     <div className="min-h-[100dvh] bg-gradient-to-b from-secondary via-background to-background flex items-center">
       <div className="container mx-auto max-w-lg px-4 py-12 text-center animate-fade-in">
@@ -659,7 +698,7 @@ const ArmaTuViaje = () => {
           className="bg-whatsapp hover:bg-whatsapp/90 text-whatsapp-foreground gap-2 w-full sm:w-auto px-8"
         >
           <a
-            href={`https://wa.me/52${SEGUIMIENTO_NUMERO}?text=${encodeURIComponent(TEXTOS.seguimientoMsg)}`}
+            href={`https://wa.me/52${SEGUIMIENTO_NUMERO}?text=${encodeURIComponent(whatsappMessage)}`}
             target="_blank"
             rel="noopener noreferrer"
           >
