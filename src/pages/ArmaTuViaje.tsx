@@ -454,6 +454,31 @@ const ArmaTuViaje = () => {
 
   // ---------- RESULTADO ----------
   if (phase === 10) {
+    const resDestino = q.destino === "otro" ? q.otroDestino : labelFromId(DESTINOS, q.destino);
+    const resFechas =
+      q.tipoFechas === "tengo-fechas"
+        ? q.fechaSalida
+          ? format(new Date(q.fechaSalida), "d MMM yyyy", { locale: es })
+          : ""
+        : q.tipoFechas === "aproximadas"
+          ? `${q.mes ?? ""}${q.quincena ? " · " + q.quincena : ""}`
+          : q.tipoFechas === "flexible"
+            ? q.flexibilidad.join(", ")
+            : "Fecha a recomendar";
+    const resDuracion = q.duracion === "otra" ? q.duracionOtra : labelFromId(DURACIONES, q.duracion);
+    const totalPax = q.adultos + q.menores + q.bebes;
+    const resPax = `${totalPax} ${totalPax === 1 ? "viajero" : "viajeros"}`;
+    const resPresupuesto = q.nivelPresupuesto
+      ? `${labelFromId(NIVELES_PRESUPUESTO, q.nivelPresupuesto)}${q.moneda ? " (" + q.moneda + ")" : ""}`
+      : "";
+    const summaryChips = [
+      { icon: MapPin, value: resDestino },
+      { icon: CalendarRange, value: resFechas },
+      { icon: Clock, value: resDuracion },
+      { icon: Users, value: resPax },
+      { icon: Scale, value: resPresupuesto },
+    ].filter((c) => c.value && c.value.trim());
+
     return (
       <div className="min-h-[100dvh] bg-gradient-to-b from-secondary via-background to-background flex flex-col">
         <div className="flex-1 container mx-auto max-w-2xl px-4 py-8 animate-fade-in">
@@ -461,11 +486,29 @@ const ArmaTuViaje = () => {
             <Star className="h-3.5 w-3.5 text-accent" /> Tu recomendación personalizada
           </span>
           <p className="text-muted-foreground mb-1">Tu viaje ideal parece ser:</p>
-          <h1 className="text-2xl md:text-4xl font-bold mb-4">{recommendation.titulo}</h1>
-          <p className="text-muted-foreground mb-6">{recommendation.descripcion}</p>
+          <h1 className="text-2xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            {recommendation.titulo}
+          </h1>
+          <p className="text-muted-foreground mb-5">{recommendation.descripcion}</p>
 
-          <div className="rounded-xl border border-border bg-card p-5 mb-5">
-            <p className="font-semibold mb-3">Qué debería incluir</p>
+          {summaryChips.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-6">
+              {summaryChips.map((c) => (
+                <span
+                  key={c.value}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-foreground/80"
+                >
+                  <c.icon className="h-3.5 w-3.5 text-primary" />
+                  {c.value}
+                </span>
+              ))}
+            </div>
+          )}
+
+          <div className="rounded-xl border border-primary/20 bg-card p-5 mb-5 shadow-sm">
+            <p className="font-semibold mb-3 flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-accent" /> Qué incluye tu plan ideal
+            </p>
             <ul className="space-y-2">
               {recommendation.incluye.map((b) => (
                 <li key={b} className="flex items-start gap-2 text-sm">
