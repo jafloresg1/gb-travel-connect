@@ -89,6 +89,14 @@ export const FLEXIBILIDAD = [
   "Entre semana", "Fin de semana", "Temporada baja", "Vacaciones escolares", "Puentes / festivos",
 ];
 
+export const DURACIONES: OptionCard[] = [
+  { id: "4d3n", label: "4 días / 3 noches" },
+  { id: "5d4n", label: "5 días / 4 noches" },
+  { id: "6d5n", label: "6 días / 5 noches" },
+  { id: "7d6n", label: "7 días / 6 noches" },
+  { id: "otra", label: "Otra duración", icon: "Pencil" },
+];
+
 // Paso 6 — Estilos de viaje
 export const ESTILOS = [
   "Económico", "Familiar", "Pareja", "Luna de miel", "Lujo", "Todo incluido",

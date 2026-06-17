@@ -23,6 +23,8 @@ export interface QuoteState {
   moneda: string | null;
   nivelPresupuesto: string | null;
   urgencia: string | null;
+  duracion: string | null;
+  duracionOtra: string;
   respuestaCliente: string | null;
   ajustes: string[];
   comentarioCambio: string;
@@ -52,6 +54,8 @@ export const initialQuote: QuoteState = {
   moneda: null,
   nivelPresupuesto: null,
   urgencia: null,
+  duracion: null,
+  duracionOtra: "",
   respuestaCliente: null,
   ajustes: [],
   comentarioCambio: "",

@@ -23,7 +23,7 @@ import { initialQuote, QuoteState, recommend, Recommendation } from "@/lib/recom
 import {
   HERO, SERVICIOS, DESTINOS, ORIGENES, TIPO_FECHAS, MESES, QUINCENAS, FLEXIBILIDAD,
   ESTILOS, MONEDAS, NIVELES_PRESUPUESTO, URGENCIAS, FEEDBACK_OPCIONES, AJUSTES,
-  PREFERENCIA_CONTACTO, TEXTOS, OptionCard,
+  PREFERENCIA_CONTACTO, TEXTOS, OptionCard, DURACIONES,
 } from "@/lib/armaViaje";
 import logo from "@/assets/logo_gbtravel.png";
 
@@ -40,7 +40,7 @@ const renderIcon = (name?: string) => {
   return Icon ? <Icon className="h-5 w-5" /> : null;
 };
 
-const TOTAL_STEPS = 8;
+const TOTAL_STEPS = 9;
 
 const labelFromId = (list: OptionCard[], id: string | null) =>
   list.find((o) => o.id === id)?.label ?? id ?? "";
@@ -289,8 +289,43 @@ const ArmaTuViaje = () => {
     );
   }
 
-  // ---------- STEP 5: Pasajeros ----------
+  // ---------- STEP 5: Duración ----------
   if (phase === 5) {
+    return (
+      <StepShell
+        step={5}
+        total={TOTAL_STEPS}
+        title="¿Por cuántas noches quieres viajar?"
+        subtitle="Elige una opción o escribe la tuya."
+        onBack={goBack}
+        onNext={goNext}
+        nextDisabled={!q.duracion || (q.duracion === "otra" && !q.duracionOtra.trim())}
+      >
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {DURACIONES.map((d) => (
+            <SelectableCard
+              key={d.id}
+              label={d.label}
+              icon={renderIcon(d.icon)}
+              selected={q.duracion === d.id}
+              onClick={() => set({ duracion: d.id })}
+            />
+          ))}
+        </div>
+        {q.duracion === "otra" && (
+          <Input
+            className="mt-4"
+            placeholder="Ej. 10 días / 9 noches"
+            value={q.duracionOtra}
+            onChange={(e) => set({ duracionOtra: e.target.value })}
+          />
+        )}
+      </StepShell>
+    );
+  }
+
+  // ---------- STEP 6: Pasajeros ----------
+  if (phase === 6) {
     const setEdad = (i: number, val: number) => {
       const next = [...q.edadesMenores];
       next[i] = val;
@@ -303,7 +338,7 @@ const ArmaTuViaje = () => {
       set({ menores, edadesMenores: next });
     };
     return (
-      <StepShell step={5} total={TOTAL_STEPS} title="¿Cuántas personas viajan?" onBack={goBack} onNext={goNext}>
+      <StepShell step={6} total={TOTAL_STEPS} title="¿Cuántas personas viajan?" onBack={goBack} onNext={goNext}>
         <div className="space-y-3">
           <Counter label="Adultos" value={q.adultos} min={1} onChange={(v) => set({ adultos: v })} />
           <Counter label="Menores" hint="2 a 17 años" value={q.menores} min={0} onChange={syncEdades} />
@@ -336,11 +371,11 @@ const ArmaTuViaje = () => {
     );
   }
 
-  // ---------- STEP 6: Estilos ----------
-  if (phase === 6) {
+  // ---------- STEP 7: Estilos ----------
+  if (phase === 7) {
     return (
       <StepShell
-        step={6}
+        step={7}
         total={TOTAL_STEPS}
         title="¿Qué estilo de viaje buscas?"
         subtitle="Puedes elegir varias opciones."
@@ -357,11 +392,11 @@ const ArmaTuViaje = () => {
     );
   }
 
-  // ---------- STEP 7: Presupuesto ----------
-  if (phase === 7) {
+  // ---------- STEP 8: Presupuesto ----------
+  if (phase === 8) {
     return (
       <StepShell
-        step={7}
+        step={8}
         total={TOTAL_STEPS}
         title="¿Qué nivel de presupuesto tienes en mente?"
         onBack={goBack}
@@ -390,11 +425,11 @@ const ArmaTuViaje = () => {
     );
   }
 
-  // ---------- STEP 8: Urgencia ----------
-  if (phase === 8) {
+  // ---------- STEP 9: Urgencia ----------
+  if (phase === 9) {
     return (
       <StepShell
-        step={8}
+        step={9}
         total={TOTAL_STEPS}
         title="¿Qué tan pronto quieres reservar?"
         onBack={goBack}
@@ -418,7 +453,7 @@ const ArmaTuViaje = () => {
   }
 
   // ---------- RESULTADO ----------
-  if (phase === 9) {
+  if (phase === 10) {
     return (
       <div className="min-h-[100dvh] bg-gradient-to-b from-secondary via-background to-background flex flex-col">
         <div className="flex-1 container mx-auto max-w-2xl px-4 py-8 animate-fade-in">
@@ -469,13 +504,13 @@ const ArmaTuViaje = () => {
   }
 
   // ---------- FEEDBACK ----------
-  if (phase === 10) {
+  if (phase === 11) {
     const canContinue =
       !!q.respuestaCliente &&
       (q.respuestaCliente !== "ajustar" || q.ajustes.length > 0);
     return (
       <StepShell
-        step={8}
+        step={9}
         total={TOTAL_STEPS}
         title="¿Este resultado se parece a lo que estás buscando?"
         onBack={goBack}
@@ -520,11 +555,11 @@ const ArmaTuViaje = () => {
   }
 
   // ---------- CONTACTO ----------
-  if (phase === 11) {
+  if (phase === 12) {
     const hasContact = q.whatsapp.trim().length > 0 || q.correo.trim().length > 0;
     return (
       <StepShell
-        step={8}
+        step={9}
         total={TOTAL_STEPS}
         title="¿A dónde te enviamos opciones reales para este viaje?"
         onBack={goBack}
@@ -583,7 +618,7 @@ const ArmaTuViaje = () => {
   }
 
   // ---------- RESUMEN ----------
-  if (phase === 12) {
+  if (phase === 13) {
     const destinoLabel = q.destino === "otro" ? q.otroDestino : labelFromId(DESTINOS, q.destino);
     const origenLabel = q.origen === "otro" ? q.otroOrigen : labelFromId(ORIGENES, q.origen);
     const fechasLabel =
@@ -595,11 +630,14 @@ const ArmaTuViaje = () => {
             ? q.flexibilidad.join(", ")
             : "Quiere recomendación de fecha";
 
+    const duracionLabel = q.duracion === "otra" ? q.duracionOtra : labelFromId(DURACIONES, q.duracion);
+
     const rows: [string, string][] = [
       ["Servicio", q.servicios.map((s) => labelFromId(SERVICIOS, s)).join(", ")],
       ["Destino", destinoLabel || "—"],
       ["Ciudad de salida", origenLabel || "—"],
       ["Fechas", fechasLabel || "—"],
+      ["Duración", duracionLabel || "—"],
       ["Adultos", String(q.adultos)],
       ["Menores", q.menores ? `${q.menores} (edades: ${q.edadesMenores.join(", ")})` : "0"],
       ["Bebés", String(q.bebes)],
@@ -615,7 +653,7 @@ const ArmaTuViaje = () => {
 
     return (
       <StepShell
-        step={8}
+        step={9}
         total={TOTAL_STEPS}
         title="Revisa tu solicitud"
         onBack={goBack}
@@ -668,6 +706,8 @@ const ArmaTuViaje = () => {
     ...(q.comentarioCambio ? [q.comentarioCambio] : []),
   ].filter(Boolean).join(" · ") || "Ninguno";
 
+  const duracionLabel = q.duracion === "otra" ? q.duracionOtra : labelFromId(DURACIONES, q.duracion);
+
   const whatsappMessage = [
     'Hola, acabo de llenar "Arma tu viaje ideal" en GB Travel y quiero dar seguimiento a mi cotización.',
     "",
@@ -676,6 +716,7 @@ const ArmaTuViaje = () => {
     `Destino: ${destinoLabel || "—"}`,
     `Origen: ${origenLabel || "—"}`,
     `Fechas: ${fechasLabel || "—"}`,
+    `Duración: ${duracionLabel || "—"}`,
     `Pasajeros: ${pasajerosLabel || "—"}`,
     `Estilo de viaje: ${q.estilos.join(", ") || "—"}`,
     `Presupuesto: ${presupuestoLabel || "—"}`,
@@ -754,6 +795,8 @@ const ArmaTuViaje = () => {
         moneda: q.moneda,
         nivel_presupuesto: labelFromId(NIVELES_PRESUPUESTO, q.nivelPresupuesto) || null,
         urgencia: labelFromId(URGENCIAS, q.urgencia) || null,
+        duracion: labelFromId(DURACIONES, q.duracion) || null,
+        duracion_otra: q.duracion === "otra" ? q.duracionOtra : null,
         resultado_titulo: recommendation.titulo,
         resultado_descripcion: recommendation.descripcion,
         resultado_incluye: recommendation.incluye,
@@ -774,7 +817,7 @@ const ArmaTuViaje = () => {
       if (error || (data && (data as { error?: unknown }).error)) {
         throw new Error("submit failed");
       }
-      setPhase(13);
+      setPhase(14);
     } catch (e) {
       toast({
         title: "No se pudo enviar",
