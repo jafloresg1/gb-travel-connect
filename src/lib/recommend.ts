@@ -80,11 +80,56 @@ const has = (arr: string[], ...vals: string[]) =>
 const destinoEs = (q: QuoteState, ...ids: string[]) =>
   q.destino ? ids.includes(q.destino) : false;
 
+// Nombre legible del destino para usar en los títulos/textos.
+const DESTINO_NOMBRES: Record<string, string> = {
+  cancun: "Cancún",
+  "riviera-maya": "Riviera Maya",
+  "punta-cana": "Punta Cana",
+  "los-cabos": "Los Cabos",
+  orlando: "Orlando / Disney",
+  europa: "Europa",
+  japon: "Japón",
+  colombia: "Colombia",
+  "crucero-caribe": "el Caribe",
+};
+
+const destinoNombre = (q: QuoteState): string => {
+  if (q.destino === "otro" && q.otroDestino.trim()) return q.otroDestino.trim();
+  if (q.destino && DESTINO_NOMBRES[q.destino]) return DESTINO_NOMBRES[q.destino];
+  return "tu destino";
+};
+
+const totalPasajeros = (q: QuoteState) => q.adultos + q.menores + q.bebes;
+
+const pasajerosTexto = (q: QuoteState) => {
+  const total = totalPasajeros(q);
+  return total === 1 ? "1 pasajero" : `${total} pasajeros`;
+};
+
+const viajaConNinos = (q: QuoteState) =>
+  q.menores > 0 || q.bebes > 0 || has(q.estilos, "Familiar", "Con niños");
+
+// Nivel sugerido coherente con el presupuesto elegido.
+const nivelSugerido = (q: QuoteState): string => {
+  switch (q.nivelPresupuesto) {
+    case "lujo":
+      return "Superior / lujo";
+    case "superior":
+      return "Superior / cómodo";
+    case "economico":
+      return "Económico";
+    default:
+      return "Intermedio / cómodo";
+  }
+};
+
 export function recommend(q: QuoteState): Recommendation {
   const estilos = q.estilos;
   const servicios = q.servicios;
+  const destino = destinoNombre(q);
+  const conNinos = viajaConNinos(q);
 
-  // Asesoría / no estoy seguro
+  // 1) Asesoría / no estoy seguro (lo pide explícitamente)
   if (servicios.includes("asesoria") || q.respuestaCliente === "asesor") {
     return {
       titulo: "Asesoría personalizada para encontrar tu mejor opción",
@@ -93,7 +138,7 @@ export function recommend(q: QuoteState): Recommendation {
       incluye: [
         "Asesoría sin compromiso",
         "Comparación de destinos y fechas",
-        "Opciones de vuelo, hotel y traslados",
+        "Opciones según el servicio que prefieras",
         "Alternativas de pago",
       ],
       nivelSugerido: "A definir contigo",
@@ -102,7 +147,94 @@ export function recommend(q: QuoteState): Recommendation {
     };
   }
 
-  // Crucero
+  // 2) SOLO VUELO — la recomendación se enfoca únicamente en el vuelo
+  if (servicios.includes("solo-vuelo")) {
+    if (conNinos) {
+      return {
+        titulo: `Vuelo redondo para tu familia a ${destino}`,
+        descripcion:
+          `Pediste solo vuelo, así que te buscamos los mejores vuelos redondos a ${destino} para ${pasajerosTexto(q)}, con horarios cómodos para viajar en familia.`,
+        incluye: [
+          `Vuelo redondo para ${pasajerosTexto(q)}`,
+          "Horarios cómodos para viajar con niños",
+          "Opciones con y sin equipaje documentado",
+          "Comparación de aerolíneas y fechas",
+          "Alternativas de pago en algunas tarifas",
+        ],
+        nivelSugerido: nivelSugerido(q),
+        prioridad: "Horarios cómodos y buen precio para la familia",
+        siguiente: "Comparar tarifas en fechas cercanas para el mejor precio.",
+      };
+    }
+    return {
+      titulo: `Vuelo redondo a ${destino} al mejor precio`,
+      descripcion:
+        `Pediste solo vuelo: te buscamos el vuelo redondo a ${destino} con la mejor combinación de precio y horario para ${pasajerosTexto(q)}.`,
+      incluye: [
+        `Vuelo redondo para ${pasajerosTexto(q)}`,
+        "Comparación de tarifas y horarios",
+        "Opciones con y sin equipaje documentado",
+        "Alternativas de aerolíneas",
+        "Comparación de fechas cercanas",
+      ],
+      nivelSugerido: nivelSugerido(q),
+      prioridad: "Precio y flexibilidad de fechas",
+      siguiente: "Comparar tarifas en fechas cercanas para el mejor precio.",
+    };
+  }
+
+  // 3) SOLO HOTEL — la recomendación se enfoca únicamente en el hospedaje
+  if (servicios.includes("solo-hotel")) {
+    if (has(estilos, "Negocios")) {
+      return {
+        titulo: `Hotel práctico en ${destino} para tu viaje de negocios`,
+        descripcion:
+          "Pediste solo hotel: te buscamos un hospedaje bien ubicado y eficiente, pensado para un viaje de trabajo.",
+        incluye: [
+          "Hotel bien ubicado",
+          "Buena conexión a zonas de negocio",
+          "Opciones con desayuno",
+          "Tarifas con flexibilidad de cambios",
+        ],
+        nivelSugerido: nivelSugerido(q),
+        prioridad: "Ubicación y practicidad",
+        siguiente: "Comparar 2 o 3 hoteles por ubicación y servicios.",
+      };
+    }
+    if (conNinos) {
+      return {
+        titulo: `Hotel familiar en ${destino}`,
+        descripcion:
+          `Pediste solo hotel: te buscamos un hospedaje cómodo para ${pasajerosTexto(q)}, ideal para disfrutar en familia.`,
+        incluye: [
+          `Hotel para ${pasajerosTexto(q)}`,
+          "Hoteles con actividades para niños",
+          "Opciones con desayuno o todo incluido",
+          "Buena ubicación y comodidad",
+          "Opciones con pagos flexibles",
+        ],
+        nivelSugerido: nivelSugerido(q),
+        prioridad: "Comodidad familiar y buena ubicación",
+        siguiente: "Comparar 2 o 3 hoteles antes de reservar.",
+      };
+    }
+    return {
+      titulo: `Hotel a tu medida en ${destino}`,
+      descripcion:
+        "Pediste solo hotel: te buscamos el hospedaje que mejor se adapte a tu estilo y presupuesto.",
+      incluye: [
+        "Hotel acorde a tu estilo",
+        "Buena ubicación",
+        "Opciones con desayuno o todo incluido",
+        "Tarifas con opciones de pago",
+      ],
+      nivelSugerido: nivelSugerido(q),
+      prioridad: "Comodidad y relación precio-beneficio",
+      siguiente: "Comparar 2 o 3 hoteles antes de reservar.",
+    };
+  }
+
+  // 4) Crucero
   if (servicios.includes("crucero") || destinoEs(q, "crucero-caribe")) {
     return {
       titulo: "Crucero por el Caribe",
@@ -121,7 +253,7 @@ export function recommend(q: QuoteState): Recommendation {
     };
   }
 
-  // Circuito internacional / cultural
+  // 5) Circuito internacional / cultural
   if (
     servicios.includes("circuito") ||
     (has(estilos, "Cultural") && destinoEs(q, "europa", "japon"))
@@ -143,10 +275,12 @@ export function recommend(q: QuoteState): Recommendation {
     };
   }
 
+  // ----- Servicios completos (vuelo+hotel, paquete, grupo): se afina por estilo -----
+
   // Luna de miel / pareja / lujo playa
   if (has(estilos, "Luna de miel") || (has(estilos, "Pareja") && has(estilos, "Lujo", "Playa"))) {
     return {
-      titulo: "Escapada romántica de playa",
+      titulo: `Escapada romántica de playa a ${destino}`,
       descripcion:
         "Por tus respuestas, te conviene una escapada romántica de playa, pensada para disfrutar en pareja con todo resuelto.",
       incluye: [
@@ -167,79 +301,55 @@ export function recommend(q: QuoteState): Recommendation {
     has(estilos, "Familiar", "Con niños") ||
     (q.menores > 0 && destinoEs(q, "cancun", "riviera-maya", "punta-cana"))
   ) {
-    const playaFam = destinoEs(q, "cancun", "riviera-maya") ? "Cancún o Riviera Maya" : "destino de playa";
     return {
-      titulo: `Paquete familiar todo incluido a ${playaFam}`,
+      titulo: `Paquete familiar todo incluido a ${destino}`,
       descripcion:
-        "Según tus respuestas, te conviene una opción que incluya vuelo redondo, hotel familiar, traslados aeropuerto-hotel-aeropuerto y plan todo incluido.",
+        `Según tus respuestas, te conviene una opción que incluya vuelo redondo, hotel familiar, traslados aeropuerto-hotel-aeropuerto y plan todo incluido para ${pasajerosTexto(q)}.`,
       incluye: [
-        "Vuelo redondo",
+        `Vuelo redondo para ${pasajerosTexto(q)}`,
         "Hotel familiar",
         "Traslados incluidos",
         "Plan todo incluido",
         "Opciones con pagos flexibles",
         "Hoteles con actividades para niños",
       ],
-      nivelSugerido: "Intermedio / cómodo",
+      nivelSugerido: nivelSugerido(q),
       prioridad: "Comodidad + buena relación precio-beneficio",
       siguiente: "Comparar 2 o 3 hoteles antes de reservar.",
     };
   }
 
-  // Negocios / solo hotel
-  if (has(estilos, "Negocios") || servicios.includes("solo-hotel")) {
+  // Negocios (con servicio completo)
+  if (has(estilos, "Negocios")) {
     return {
-      titulo: "Hotel práctico para viaje de negocios",
+      titulo: `Viaje de negocios práctico a ${destino}`,
       descripcion:
-        "Por tus respuestas, lo ideal es un hotel práctico y bien ubicado, pensado para un viaje eficiente.",
+        "Por tus respuestas, lo ideal es una combinación práctica y bien ubicada, pensada para un viaje eficiente.",
       incluye: [
+        "Vuelo con buenos horarios",
         "Hotel bien ubicado",
-        "Buena conexión a zonas de negocio",
-        "Opciones con desayuno",
+        "Traslados opcionales",
         "Tarifas con flexibilidad de cambios",
       ],
       nivelSugerido: "Intermedio",
       prioridad: "Ubicación y practicidad",
-      siguiente: "Comparar 2 o 3 hoteles por ubicación y servicios.",
-    };
-  }
-
-  // Económico / solo vuelo
-  if (servicios.includes("solo-vuelo") || (has(estilos, "Económico") && servicios.length === 0)) {
-    return {
-      titulo: "Vuelo económico con fechas flexibles",
-      descripcion:
-        "Buscas lo esencial al mejor precio: te conviene un vuelo económico aprovechando fechas flexibles.",
-      incluye: [
-        "Vuelo al mejor precio disponible",
-        "Comparación de fechas y horarios",
-        "Opciones con y sin equipaje",
-        "Alternativas de aerolíneas",
-      ],
-      nivelSugerido: "Económico",
-      prioridad: "Precio y flexibilidad de fechas",
-      siguiente: "Comparar tarifas en fechas cercanas para el mejor precio.",
+      siguiente: "Comparar 2 o 3 opciones por ubicación y servicios.",
     };
   }
 
   // Por defecto: paquete vacacional a la medida
   return {
-    titulo: "Paquete vacacional a tu medida",
+    titulo: `Paquete vacacional a tu medida en ${destino}`,
     descripcion:
       "Con tus respuestas armamos un paquete vacacional que combine vuelo, hotel y traslados según lo que buscas.",
     incluye: [
-      "Vuelo redondo",
+      `Vuelo redondo para ${pasajerosTexto(q)}`,
       "Hotel acorde a tu estilo",
       "Traslados opcionales",
       "Opciones de tours y experiencias",
       "Alternativas de pago",
     ],
-    nivelSugerido:
-      q.nivelPresupuesto === "lujo"
-        ? "Superior / lujo"
-        : q.nivelPresupuesto === "economico"
-          ? "Económico"
-          : "Intermedio / cómodo",
+    nivelSugerido: nivelSugerido(q),
     prioridad: "Equilibrio entre precio, comodidad y experiencia",
     siguiente: "Comparar 2 o 3 combinaciones de hotel y vuelo antes de reservar.",
   };
