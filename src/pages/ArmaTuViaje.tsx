@@ -223,26 +223,51 @@ const ArmaTuViaje = () => {
         </div>
 
         {tf === "tengo-fechas" && (
-          <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="rounded-xl border border-border bg-card p-2">
-              <p className="text-sm font-semibold text-center py-2">Fecha de salida</p>
+          <div className="mt-5">
+            <div className="rounded-xl border border-border bg-card p-3">
+              <p className="text-sm font-semibold text-center pb-1">
+                Elige tu fecha de salida y de regreso
+              </p>
+              <p className="text-xs text-muted-foreground text-center pb-3">
+                Toca el día de salida y luego el día de regreso.
+              </p>
               <Calendar
-                mode="single"
-                selected={q.fechaSalida ? new Date(q.fechaSalida) : undefined}
-                onSelect={(d) => set({ fechaSalida: d ? d.toISOString().slice(0, 10) : null })}
+                mode="range"
+                numberOfMonths={1}
+                selected={{
+                  from: q.fechaSalida ? new Date(q.fechaSalida + "T00:00:00") : undefined,
+                  to: q.fechaRegreso ? new Date(q.fechaRegreso + "T00:00:00") : undefined,
+                }}
+                onSelect={(range) =>
+                  set({
+                    fechaSalida: range?.from
+                      ? range.from.toISOString().slice(0, 10)
+                      : null,
+                    fechaRegreso: range?.to
+                      ? range.to.toISOString().slice(0, 10)
+                      : null,
+                  })
+                }
+                disabled={{ before: new Date() }}
                 locale={es}
                 className="p-0 pointer-events-auto mx-auto"
               />
-            </div>
-            <div className="rounded-xl border border-border bg-card p-2">
-              <p className="text-sm font-semibold text-center py-2">Fecha de regreso</p>
-              <Calendar
-                mode="single"
-                selected={q.fechaRegreso ? new Date(q.fechaRegreso) : undefined}
-                onSelect={(d) => set({ fechaRegreso: d ? d.toISOString().slice(0, 10) : null })}
-                locale={es}
-                className="p-0 pointer-events-auto mx-auto"
-              />
+              {(q.fechaSalida || q.fechaRegreso) && (
+                <div className="mt-3 flex flex-wrap items-center justify-center gap-2 text-sm">
+                  <span className="rounded-full bg-muted px-3 py-1">
+                    Salida:{" "}
+                    {q.fechaSalida
+                      ? format(new Date(q.fechaSalida + "T00:00:00"), "d MMM yyyy", { locale: es })
+                      : "—"}
+                  </span>
+                  <span className="rounded-full bg-muted px-3 py-1">
+                    Regreso:{" "}
+                    {q.fechaRegreso
+                      ? format(new Date(q.fechaRegreso + "T00:00:00"), "d MMM yyyy", { locale: es })
+                      : "—"}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         )}
