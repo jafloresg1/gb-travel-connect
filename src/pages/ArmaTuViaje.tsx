@@ -817,7 +817,7 @@ const ArmaTuViaje = () => {
       if (error || (data && (data as { error?: unknown }).error)) {
         throw new Error("submit failed");
       }
-      setPhase(13);
+      setPhase(14);
     } catch (e) {
       toast({
         title: "No se pudo enviar",
