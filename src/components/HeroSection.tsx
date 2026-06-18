@@ -32,7 +32,7 @@ const cards = [
 const HeroSection = () => (
   <section
     id="inicio"
-    className="relative overflow-hidden bg-gradient-to-b from-secondary via-background to-secondary/40 pt-28 pb-20"
+    className="relative overflow-hidden bg-gradient-to-b from-secondary via-background to-secondary/40 pt-12 pb-20"
   >
     {/* Soft decorative palm shadow */}
     <div
