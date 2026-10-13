@@ -43,7 +43,8 @@ const Footer = () => (
       </div>
 
       <div className="border-t border-primary-foreground/20 pt-6 text-center text-xs text-primary-foreground/50">
-        GB Travel © 2026. Todos los derechos reservados.
+        GB Travel © 2026. Todos los derechos reservados. ·{" "}
+        <a href="/privacidad" className="hover:text-accent transition-colors">Aviso de privacidad</a>
       </div>
     </div>
   </footer>

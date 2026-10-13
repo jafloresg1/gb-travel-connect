@@ -885,6 +885,9 @@ const ArmaTuViaje = () => {
       if (error || (data && (data as { error?: unknown }).error)) {
         throw new Error("submit failed");
       }
+      if (typeof window.fbq === "function") {
+        window.fbq("track", "Lead", { content_name: "Arma tu viaje" });
+      }
       setPhase(14);
     } catch (e) {
       toast({

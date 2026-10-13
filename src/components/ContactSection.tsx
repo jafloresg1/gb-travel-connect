@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { whatsappLink } from "@/lib/constants";
 import { useToast } from "@/hooks/use-toast";
+import { trackMeta } from "@/lib/metaPixel";
 
 const ContactSection = () => {
   const { toast } = useToast();
@@ -26,6 +27,7 @@ const ContactSection = () => {
     e.preventDefault();
     // Build WhatsApp message with form data
     const msg = `Hola, quiero cotizar un viaje.\n\nNombre: ${form.nombre}\nTeléfono: ${form.telefono}\nCorreo: ${form.correo}\nDestino: ${form.destino}\nFecha: ${form.fecha}\nPasajeros: ${form.pasajeros}\nMensaje: ${form.mensaje}`;
+    trackMeta("Contact", { content_name: "WhatsApp" });
     window.open(whatsappLink(msg), "_blank");
     toast({
       title: "¡Solicitud enviada!",
