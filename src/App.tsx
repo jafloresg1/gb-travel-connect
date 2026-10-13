@@ -7,6 +7,8 @@ import Index from "./pages/Index.tsx";
 import InternalPortal from "./pages/InternalPortal.tsx";
 import ArmaTuViaje from "./pages/ArmaTuViaje.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import Privacidad from "./pages/Privacidad.tsx";
+import MetaPixelTracker from "./components/MetaPixelTracker";
 
 const queryClient = new QueryClient();
 
@@ -16,7 +18,9 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <MetaPixelTracker />
         <Routes>
+          <Route path="/privacidad" element={<Privacidad />} />
           <Route path="/" element={<Index />} />
           <Route path="/app" element={<InternalPortal />} />
           <Route path="/arma-tu-viaje" element={<ArmaTuViaje />} />
