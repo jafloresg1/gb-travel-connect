@@ -17,9 +17,16 @@ const Footer = () => (
         {/* Links */}
         <div className="flex flex-col items-center md:items-start gap-2 text-sm">
           <h4 className="font-semibold mb-1">Navegación</h4>
-          {["Inicio", "Paquetes", "Promociones", "Nosotros", "Contacto"].map((l) => (
-            <a key={l} href={`#${l.toLowerCase()}`} className="text-primary-foreground/70 hover:text-accent transition-colors">
-              {l}
+          {[
+            { label: "Inicio", href: "/#inicio" },
+            { label: "Viajes", href: "/viajes" },
+            { label: "Promociones", href: "/promociones" },
+            { label: "Paquetes", href: "/#paquetes" },
+            { label: "Nosotros", href: "/#nosotros" },
+            { label: "Contacto", href: "/#contacto" },
+          ].map((l) => (
+            <a key={l.label} href={l.href} className="text-primary-foreground/70 hover:text-accent transition-colors">
+              {l.label}
             </a>
           ))}
         </div>
