@@ -1,4 +1,4 @@
-import { ArrowLeft, Calculator, Wallet, ListChecks, Users } from "lucide-react";
+import { ArrowLeft, Calculator, Wallet, ListChecks, Users, Map } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { INTERNAL_APP_URLS } from "@/lib/internalApps";
@@ -35,6 +35,14 @@ const apps = [
       "Seguimiento de prospectos, WhatsApp, redes sociales y oportunidades comerciales.",
     cta: "Entrar al Gestor de Leads",
     url: INTERNAL_APP_URLS.gestorLeads,
+  },
+  {
+    icon: Map,
+    title: "Catálogo",
+    description:
+      "Programas, salidas, fotos y promociones que se publican en gbtravel.mx/viajes. Requiere cuenta del equipo.",
+    cta: "Administrar catálogo",
+    url: "/app/catalogo",
   },
 ];
 

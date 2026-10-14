@@ -14,6 +14,265 @@ export type Database = {
   }
   public: {
     Tables: {
+      catalog_departures: {
+        Row: {
+          availability: string | null
+          created_at: string
+          currency: string
+          departure_city: string | null
+          end_date: string | null
+          id: string
+          notes: string | null
+          price_base: number | null
+          program_id: string
+          start_date: string
+          supplement: number | null
+          taxes: number | null
+        }
+        Insert: {
+          availability?: string | null
+          created_at?: string
+          currency?: string
+          departure_city?: string | null
+          end_date?: string | null
+          id?: string
+          notes?: string | null
+          price_base?: number | null
+          program_id: string
+          start_date: string
+          supplement?: number | null
+          taxes?: number | null
+        }
+        Update: {
+          availability?: string | null
+          created_at?: string
+          currency?: string
+          departure_city?: string | null
+          end_date?: string | null
+          id?: string
+          notes?: string | null
+          price_base?: number | null
+          program_id?: string
+          start_date?: string
+          supplement?: number | null
+          taxes?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "catalog_departures_program_id_fkey"
+            columns: ["program_id"]
+            isOneToOne: false
+            referencedRelation: "catalog_programs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      catalog_program_internal: {
+        Row: {
+          internal_notes: string | null
+          operator: string | null
+          operator_code: string | null
+          operator_url: string | null
+          program_id: string
+          updated_at: string
+        }
+        Insert: {
+          internal_notes?: string | null
+          operator?: string | null
+          operator_code?: string | null
+          operator_url?: string | null
+          program_id: string
+          updated_at?: string
+        }
+        Update: {
+          internal_notes?: string | null
+          operator?: string | null
+          operator_code?: string | null
+          operator_url?: string | null
+          program_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "catalog_program_internal_program_id_fkey"
+            columns: ["program_id"]
+            isOneToOne: true
+            referencedRelation: "catalog_programs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      catalog_program_promotions: {
+        Row: {
+          badge: string | null
+          program_id: string
+          promo_notes: string | null
+          promo_price: number | null
+          promotion_id: string
+        }
+        Insert: {
+          badge?: string | null
+          program_id: string
+          promo_notes?: string | null
+          promo_price?: number | null
+          promotion_id: string
+        }
+        Update: {
+          badge?: string | null
+          program_id?: string
+          promo_notes?: string | null
+          promo_price?: number | null
+          promotion_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "catalog_program_promotions_program_id_fkey"
+            columns: ["program_id"]
+            isOneToOne: false
+            referencedRelation: "catalog_programs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "catalog_program_promotions_promotion_id_fkey"
+            columns: ["promotion_id"]
+            isOneToOne: false
+            referencedRelation: "catalog_promotions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      catalog_programs: {
+        Row: {
+          cities: string[]
+          countries: string[]
+          created_at: string
+          currency: string
+          days: number | null
+          departure_city: string | null
+          gallery: string[]
+          highlights: string[]
+          id: string
+          image_url: string | null
+          includes: string[]
+          includes_flight: boolean
+          is_published: boolean
+          itinerary: Json
+          nights: number | null
+          not_includes: string[]
+          price_from: number | null
+          region: string
+          room_basis: string
+          slug: string
+          sort_order: number
+          summary: string | null
+          tags: string[]
+          taxes_from: number | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          cities?: string[]
+          countries?: string[]
+          created_at?: string
+          currency?: string
+          days?: number | null
+          departure_city?: string | null
+          gallery?: string[]
+          highlights?: string[]
+          id?: string
+          image_url?: string | null
+          includes?: string[]
+          includes_flight?: boolean
+          is_published?: boolean
+          itinerary?: Json
+          nights?: number | null
+          not_includes?: string[]
+          price_from?: number | null
+          region: string
+          room_basis?: string
+          slug: string
+          sort_order?: number
+          summary?: string | null
+          tags?: string[]
+          taxes_from?: number | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          cities?: string[]
+          countries?: string[]
+          created_at?: string
+          currency?: string
+          days?: number | null
+          departure_city?: string | null
+          gallery?: string[]
+          highlights?: string[]
+          id?: string
+          image_url?: string | null
+          includes?: string[]
+          includes_flight?: boolean
+          is_published?: boolean
+          itinerary?: Json
+          nights?: number | null
+          not_includes?: string[]
+          price_from?: number | null
+          region?: string
+          room_basis?: string
+          slug?: string
+          sort_order?: number
+          summary?: string | null
+          tags?: string[]
+          taxes_from?: number | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      catalog_promotions: {
+        Row: {
+          clauses: string | null
+          created_at: string
+          deposit_text: string | null
+          description: string | null
+          id: string
+          image_url: string | null
+          is_published: boolean
+          slug: string
+          title: string
+          updated_at: string
+          valid_from: string | null
+          valid_to: string | null
+        }
+        Insert: {
+          clauses?: string | null
+          created_at?: string
+          deposit_text?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_published?: boolean
+          slug: string
+          title: string
+          updated_at?: string
+          valid_from?: string | null
+          valid_to?: string | null
+        }
+        Update: {
+          clauses?: string | null
+          created_at?: string
+          deposit_text?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_published?: boolean
+          slug?: string
+          title?: string
+          updated_at?: string
+          valid_from?: string | null
+          valid_to?: string | null
+        }
+        Relationships: []
+      }
       leads: {
         Row: {
           adultos: number
