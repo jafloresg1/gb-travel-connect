@@ -1,0 +1,18 @@
+name: tmp-video
+on:
+  push:
+    branches: [tmp-video]
+    paths: ['.github/workflows/tmp-video.yml']
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          mkdir -p tmp
+          curl -fL -o tmp/gb-cancun-xcaret-tucan.mp4 "https://d2ol7oe51mr4n9.cloudfront.net/user_3Lv0R7BxTOk3mFQCpiAJh7rEwoS/a3f802fd-786f-4329-930e-e9f1762b57b3.mp4"
+          git config user.name "GB Travel"
+          git config user.email "noreply@github.com"
+          git add tmp && git commit -m "video temporal" && git push
